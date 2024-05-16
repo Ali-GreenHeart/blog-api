@@ -10,6 +10,10 @@ const userModel = model(
       job: String,
       email: String,
       password: String,
+      isAdmin: {
+        type: Boolean,
+        default: false
+      }
     },
     { versionKey: false }
   )

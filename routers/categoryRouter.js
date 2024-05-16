@@ -5,13 +5,14 @@ import {
   getAllCategory,
   updateCategory,
 } from "../service/categoryService.js";
+import adminMiddleWare from "../middlewares/adminMiddleWare.js";
 const categoryRouter = new Router();
 
 categoryRouter.get("/", async (req, res) => {
   const item = await getAllCategory();
   res.status(200).send(item);
 });
-categoryRouter.post("/", async (req, res) => {
+categoryRouter.post("/", adminMiddleWare, async (req, res) => {
   const item = await createCategory(req.body);
   res.status(201).send(item);
 });

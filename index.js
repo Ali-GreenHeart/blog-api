@@ -11,6 +11,6 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);
 app.use("/category", categoryRouter);
-app.listen(process.env.BLOG_PORT, () => {
-  console.log("listening on " + process.env.BLOG_PORT);
+app.listen(process.env.BLOG_API_PORT, () => {
+  console.log("listening on " + process.env.BLOG_API_PORT);
 });
