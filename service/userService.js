@@ -45,8 +45,14 @@ export const adminLogin = async (req, res) => {
   if (user) {
     const userCheck = await bcrypt.compareSync(password, user.password);
     if (userCheck) {
-      const token = jwt.sign({ _id: user._id, role: "ADMIN" }, process.env.SECRET_KEY);
-      res.send({ accessToken: token });
+      const token = jwt.sign({ _id: user._id, role: "ADMIN" }, process.env.SECRET_KEY, { expiresIn: '1m' });
+      const refreshToken = jwt.sign({ _id: user._id, role: "ADMIN" }, process.env.SECRET_KEY, { expiresIn: '1d' });
+
+      res
+        .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: 'strict' })
+        .header('Authorization', token)
+        .send({ accessToken: token });
+
     } else {
       res.status(401).send("wrong password");
     }
